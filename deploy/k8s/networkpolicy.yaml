@@ -1,0 +1,15 @@
+# Least privilege on the network: orders-api only receives HTTP and makes no outbound calls.
+# Enforced where the CNI supports NetworkPolicy; the Node permission model is the in-process layer.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: orders-api
+  namespace: orders
+spec:
+  podSelector:
+    matchLabels: { app.kubernetes.io/name: orders-api }
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - ports:
+        - { protocol: TCP, port: 8080 }
+  egress: []
