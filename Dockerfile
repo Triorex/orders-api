@@ -22,4 +22,7 @@ COPY package.json ./
 COPY src/ ./src/
 USER 65532:65532
 EXPOSE 8080
+# For docker run and Compose; Kubernetes uses the liveness and readiness probes in deploy/k8s.
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD ["node", "-e", "fetch('http://127.0.0.1:8080/healthz').then(r => process.exit(r.ok ? 0 : 1), () => process.exit(1))"]
 ENTRYPOINT ["node", "--permission", "--allow-fs-read=/app/", "--allow-net", "--disallow-code-generation-from-strings", "src/server.js"]
