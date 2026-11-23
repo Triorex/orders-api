@@ -1,0 +1,5 @@
+node_modules/
+*.sarif
+*.tar
+.trivyignore.generated
+.DS_Store
