@@ -4,13 +4,13 @@
 # workers, load native addons or eval strings.
 # Bases are pinned by digest; Dependabot (docker) updates them.
 
-FROM cgr.dev/chainguard/node:latest-dev@sha256:8e8d45dd674724ccc71aed270223c3e2efc74edde6c841158d618d2baaaf5527 AS builder
+FROM cgr.dev/chainguard/node:latest-dev@sha256:42e9e83d31a228a12c991c4c332205409cb7b46bd29a3e9519f6c98f710fbea1 AS builder
 WORKDIR /app
 COPY --chown=65532:65532 package.json package-lock.json .npmrc ./
 # npm ci installs exactly the lockfile (integrity hashes checked); .npmrc disables install scripts.
 RUN npm ci --omit=dev --no-audit --ignore-scripts && npm cache clean --force
 
-FROM cgr.dev/chainguard/node:latest@sha256:3fb5318a58807dec0f2ece547efbe8d62c67b7b2fd91a16795b98651d6385dbe
+FROM cgr.dev/chainguard/node:latest@sha256:3f0d2afa09a5b4ccf8cb9caf9457343d0128a7e1ca63ebe5f9932420fe96cfa4
 LABEL org.opencontainers.image.title="orders-api" \
       org.opencontainers.image.vendor="Triorex" \
       org.opencontainers.image.licenses="MIT"
